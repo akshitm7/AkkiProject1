@@ -22,12 +22,7 @@ body {
     margin: 0;
 }
 
-.heading {
-    color: white;
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 20px;
-}
+
 
 .container {
     background-image:linear-gradient(to bottom ,rgba(0, 229, 255, 0.514),rgb(0, 128, 96));
