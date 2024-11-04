@@ -1,52 +1,32 @@
-@keyframes backgroundAnimation {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb, #ff99cc);
-    background-size: 300% 300%;
-    animation: backgroundAnimation 15s ease infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    background-color: #f4f4f4;
     margin: 0;
-}
-
-
-
-.container {
-    background-image:linear-gradient(to bottom ,rgba(0, 229, 255, 0.514),rgb(0, 128, 96));
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-gap: 10px;
 }
-
-.cell {
+h1 {
+    text-align: center;
+    color: #333;
+}
+#paletteContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+.color-block {
     width: 100px;
     height: 100px;
-    background-color: #e9ecef;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
-
-.cell:hover {
-    background-color: #ced4da;
+.controls {
+    text-align: center;
+    margin: 20px 0;
+}
+select, input[type="text"], button {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
 }

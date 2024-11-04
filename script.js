@@ -1,74 +1,33 @@
-let currentPlayer = 'X';
-let board = [
-    ['', '', ''],
-    ['', '', ''],
-    ['', '', '']
-];
-
-const cells = document.querySelectorAll('.cell');
-
-function makeMove(row, col) {
-    if (board[row][col] === '') {
-        board[row][col] = currentPlayer;
-        render();
-        if (checkWin()) {
-            alert(currentPlayer + ' wins!');
-            resetGame();
-        } else if (checkDraw()) {
-            alert('It\'s a draw!');
-            resetGame();
-        } else {
-            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        }
+document.getElementById("generateButton").addEventListener("click", function () {
+    const baseColor = document.getElementById("baseColor").value;
+    const colorScheme = document.getElementById("colorScheme").value;
+    const paletteContainer = document.getElementById("paletteContainer");
+    paletteContainer.innerHTML = ""; // Clear previous palette
+    if (isValidHex(baseColor)) {
+        // Make a POST request to the Flask server
+        fetch('/generate_palette', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ baseColor, colorScheme }),
+        })
+        .then(response => response.json())
+        .then(palette => displayPalette(palette))
+        .catch(error => console.error('Error:', error));
+    } else {
+        alert("Please enter a valid HEX color code.");
     }
+});
+function isValidHex(hex) {
+    return /^#([0-9A-Fa-f]{3}){1,2}$/.test(hex);
 }
-
-function checkWin() {
-    // Check rows
-    for (let i = 0; i < 3; i++) {
-        if (board[i][0] === currentPlayer && board[i][1] === currentPlayer && board[i][2] === currentPlayer) {
-            return true;
-        }
-    }
-    // Check columns
-    for (let i = 0; i < 3; i++) {
-        if (board[0][i] === currentPlayer && board[1][i] === currentPlayer && board[2][i] === currentPlayer) {
-            return true;
-        }
-    }
-    // Check diagonals
-    if ((board[0][0] === currentPlayer && board[1][1] === currentPlayer && board[2][2] === currentPlayer) ||
-        (board[0][2] === currentPlayer && board[1][1] === currentPlayer && board[2][0] === currentPlayer)) {
-        return true;
-    }
-    return false;
-}
-
-function checkDraw() {
-    for (let row of board) {
-        for (let cell of row) {
-            if (cell === '') {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-function render() {
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            cells[i * 3 + j].innerText = board[i][j];
-        }
-    }
-}
-
-function resetGame() {
-    currentPlayer = 'X';
-    board = [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', '']
-    ];
-    render();
+function displayPalette(palette) {
+    const paletteContainer = document.getElementById("paletteContainer");
+    palette.forEach(color => {
+        const colorBlock = document.createElement("div");
+        colorBlock.className = "color-block";
+        colorBlock.style.backgroundColor = color;
+        paletteContainer.appendChild(colorBlock);
+    });
 }
